@@ -10,7 +10,7 @@ class SearchResultList extends Component {
             if (i !== 0) return (
               <li key={i}>
                 <a href={'https://reddit.com' + link.data.permalink}><h3>{link.data.title}</h3></a>
-                <p><strong>Ups:</strong> {link.data.ups}</p>
+                <p><strong>UPs:</strong> {link.data.ups}</p>
                 <img src={link.data.thumbnail} />
               </li>
             );
