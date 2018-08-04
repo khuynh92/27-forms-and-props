@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 
 class SearchResultList extends Component {
 
-  // loadResults() {
-  //   this.props.results.map((link, i) => {
-  //     console.log('woo')
-  //     return <li key={i}><img src={link.data.thumbnail}/></li>;
-  //   });
-  // }
   render() {
     return (
       <ul>
