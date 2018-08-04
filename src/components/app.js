@@ -36,7 +36,7 @@ export default class App extends Component {
       this.setState({
         error: false,
         results: results.body.data.children,
-      });
+      }, () => console.log(this.state));
       this.isLoading(false);
     } catch (err) {
       console.log(err);
