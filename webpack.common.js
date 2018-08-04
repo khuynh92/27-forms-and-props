@@ -2,14 +2,14 @@
 
 require('dotenv').config();
 
-const { DefinePlugin } = require('webpack');
+const {DefinePlugin} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const production = process.env.NODE_ENV === 'production'; // evals to a Boolean value
+const production = process.env.NODE_ENV === 'production';
 
 const webpackConfig = module.exports = {};
 
-webpackConfig.entry = `${__dirname}/src/main.js`;
+webpackConfig.entry = ['babel-polyfill', `${__dirname}/src/main.js`];
 
 webpackConfig.output = {
   filename: '[name].[hash].js',
@@ -19,30 +19,28 @@ webpackConfig.output = {
 
 webpackConfig.plugins = [
   new HtmlWebpackPlugin({
-    title: 'React App',
-    template: `${__dirname}/src/index.html`
+    title:'React App',
+    template: `${__dirname}/src/index.html`,
   }),
-  // this makes webpack constants
   new DefinePlugin({
     API_URL: JSON.stringify(process.env.API_URL),
+    PRODUCTION: production,
   }),
 ];
 
 webpackConfig.module = {};
 
-webpackConfig.module.rules = [{
-    test: /\.(png|svg|jpg|gif)$/,
-    use: [
-      'file-loader',
-    ],
+webpackConfig.module.rules = [
+  {
+    test: /\.(png|gif|svg|jpg)$/,
+    use: [ 'file-loader' ],
   },
   {
     test: /\.js$/,
-    exclude: /node_modules/,
     use: {
       loader: 'babel-loader',
       options: {
-        presets: ['env', 'stage-0', 'react'],
+        presets: ['env','stage-0','react'],
         plugins: ['transform-react-jsx-source'],
         cacheDirectory: true,
       },

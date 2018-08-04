@@ -23,27 +23,30 @@ export default class App extends Component {
   }
 
   isLoading(loading) {
-    this.setState( Object.assign(...this.state, {loading}) );
+    this.setState(Object.assign(...this.state, { loading }));
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
+
     e.preventDefault();
     this.isLoading(true);
-    return superagent.get(`https://www.reddit.com/r/${this.state.subreddit}.json?limit=${this.state.number}`)
-      .then(result => {
-        console.log(result.body.data.children);
-        this.isLoading(false);
-        this.setState({
-          error: false,
-          results : result.body.data.children,
-        });
-      })
-      .catch(() => {
-        this.setState({error: true});
+
+    try {
+      const results = await superagent.get(`https://www.reddit.com/r/${this.state.subreddit}.json?limit=${this.state.number}`)
+      this.setState({
+        error: false,
+        results: results.body.data.children,
       });
+      this.isLoading(false);
+    } catch (err) {
+      console.log(err);
+      this.isLoading(false);
+      this.setState({ error: true });
+    }
+
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value,
@@ -52,8 +55,8 @@ export default class App extends Component {
   render() {
     return (
       <Fragment>
-        <h1>Hello World</h1>
-        <SearchForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} error={this.state.error}/>
+        <h1>Reddit Finder</h1>
+        <SearchForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} error={this.state.error} />
         <SearchResultList results={this.state.results} />
       </Fragment>
     );

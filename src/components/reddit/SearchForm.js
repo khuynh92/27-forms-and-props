@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class SearchForm extends Component {
   render() {
     return (
-      <form className={this.props.error ? 'error' : ' ' } onSubmit={this.props.handleSubmit}>
+      <form className={this.props.error ? 'error' : '' } onSubmit={this.props.handleSubmit}>
         <label>
           subreddit <br />
           <input onChange={this.props.handleChange} type="text" name="subreddit"/>
@@ -21,6 +21,7 @@ class SearchForm extends Component {
     );
   }
 }
+
 
 export default SearchForm;
 
