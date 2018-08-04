@@ -30,13 +30,13 @@ export default class App extends Component {
 
     e.preventDefault();
     this.isLoading(true);
-    
+
     try {
       const results = await superagent.get(`https://www.reddit.com/r/${this.state.subreddit}.json?limit=${this.state.number}`)
       this.setState({
         error: false,
         results: results.body.data.children,
-      });
+      }, () => console.log(this.state));
       this.isLoading(false);
     } catch (err) {
       console.log(err);
